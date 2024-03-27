@@ -63,3 +63,11 @@ assert_equal data.dig('problem_one', 'response'), HashManipulator.new(data.dig('
 assert_equal data.dig('problem_two', 'response'), HashManipulator.new(data.dig('problem_two', 'data')).problem_two_solution
 
 assert_equal data.dig('problem_three', 'response'), HashManipulator.new(data.dig('problem_three', 'data')).problem_three_solution
+
+def assert_equal(expected, actual)
+   if expected.to_s == actual.to_s  
+     puts "Assertion passed"    
+   else    
+     puts "Assertion failed"    
+   end    
+ end 
