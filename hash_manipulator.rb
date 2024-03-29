@@ -1,4 +1,3 @@
-require 'test-unit'
 require 'json'
 
 class HashManipulator
@@ -50,8 +49,8 @@ assert_equal data.dig('problem_three', 'response'), HashManipulator.new(data.dig
 
 def assert_equal(expected, actual)
    if expected.to_s == actual.to_s  
-     puts "Assertion passed #{expectd} equal to #{actual}"    
+     puts "Assertion passed #{expected} equal to #{actual}"    
    else    
-     puts "Assertion failed #{expectd} not equal to #{actual}"    
+     puts "Assertion failed #{expected} not equal to #{actual}"    
    end    
  end
