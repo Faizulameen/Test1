@@ -6,16 +6,21 @@ class HashManipulator
     @keys = keys
   end
 
- def problem_solved
-    grouped_data = @data.group_by { |d| d[@keys[0]] }
-    grouped_data.transform_values do |client_data|
-      client_data.group_by { |d| d[@keys[1]] }.transform_values do |location_data|
-        location_data.group_by { |d| d[@keys[2]] }.transform_values do |month_data|
-          { 'amount' => month_data.map { |d| d[@keys[3]] }.compact.sum, 'amount2' => month_data.map { |d| d[@keys[4]] }.compact.sum }
-        end.reject { |k, v| v.nil? || v.empty? } # Remove nil or empty values
-      end.reject { |k, v| v.nil? || v.empty? } # Remove nil or empty values
-    end.reject { |k, v| v.nil? || v.empty? } # Remove nil or empty values
+def problem_one
+  response = []
+  @data.group_by { |d| d[@keys[0]] }.each do |client, client_data|
+    client_data.group_by { |d| d[@keys[1]] }.each do |location, location_data|
+      response << {
+        'client' => client,
+        location => {
+          'amount' => location_data.sum { |d| d[@keys[2]].to_i },
+          'amount2' => location_data.sum { |d| d[@keys[3]].to_i }
+        }
+      }
+    end
   end
+  { 'response' => response }
+end
 end
 
 data = JSON.parse(File.read('./data.json'))
