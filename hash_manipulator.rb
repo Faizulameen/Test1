@@ -1,7 +1,7 @@
 require 'json'
 
 class HashManipulator
-  def initialize(data, keys)
+  def initialize(data, *keys)
     @data = data
     @keys = keys
   end
@@ -26,12 +26,8 @@ end
 
 data = JSON.parse(File.read('./data.json'))
 
-# assert_equal data.dig('problem_one', 'response'), HashManipulator.new(data.dig('problem_one', 'data'), %w[client location amount]).problem_one
-# assert_equal data.dig('problem_two', 'response'), HashManipulator.new(data.dig('problem_two', 'data'), %w[client location month amount amount2]).problem_two
-# assert_equal data.dig('problem_three', 'response'), HashManipulator.new(data.dig('problem_three', 'data'), %w[client location month amount amount2]).problem_three
-
-assert_equal data.dig('problem_one', 'response'), HashManipulator.new(data.dig('problem_one', 'data'), %w[client location amount]).problem_solved
-
+keys = %w[client location amount] # Example keys, you can change these as needed
+assert_equal data.dig('problem_one', 'response'), HashManipulator.new(data.dig('problem_one', 'data'), *keys).problem_solved
 
 def assert_equal(expected, actual)
    if expected.to_s == actual.to_s  
