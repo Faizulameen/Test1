@@ -6,7 +6,7 @@ class HashManipulator
     @keys = keys
   end
 
-def problem_one
+def problem_solved
   response = []
   @data.group_by { |d| d[@keys[0]] }.each do |client, client_data|
     client_data.group_by { |d| d[@keys[1]] }.each do |location, location_data|
