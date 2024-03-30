@@ -9,18 +9,19 @@ class HashManipulator
 def problem_solved
   response = []
   @data.group_by { |d| d[@keys[0]] }.each do |client, client_data|
+    client_hash = { @keys[0] => client }
+    location_hash = {}
     client_data.group_by { |d| d[@keys[1]] }.each do |location, location_data|
-      response << {
-        'client' => client,
-        location => {
-          'amount' => location_data.sum { |d| d[@keys[2]].to_i },
-          'amount2' => location_data.sum { |d| d[@keys[3]].to_i }
-        }
+      location_hash[location] = {
+        'amount' => location_data.sum { |d| d[@keys[2]].to_i }
       }
     end
+    client_hash.merge!(location_hash)
+    response << client_hash
   end
-  { 'response' => response }
+  response
 end
+
 end
 
 data = JSON.parse(File.read('./data.json'))
