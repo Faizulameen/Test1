@@ -1,22 +1,24 @@
 require 'json'
 
 class HashManipulator
+
+# Constructor the intialize
   def initialize(data, *keys)
     @data = data
     @keys = keys
   end
 
 def problem_solved
-  response = []
-  @data.group_by { |d| d[@keys[0]] }.each do |client, client_data|
-    client_hash = { @keys[0] => client }
+  response = [] #creating one empty array
+  @data.group_by { |d| d[@keys[0]] }.each do |client, client_data| #grouping client 
+    client_hash = { @keys[0] => client } 
     location_hash = {}
-    client_data.group_by { |d| d[@keys[1]] }.each do |location, location_data|
+    client_data.group_by { |d| d[@keys[1]] }.each do |location, location_data| #grouping location based on location amount calculating
       location_hash[location] = {
         'amount' => location_data.sum { |d| d[@keys[2]].to_i }
       }
     end
-    client_hash.merge!(location_hash)
+    client_hash.merge!(location_hash) #finally merge the values and pushed to array
     response << client_hash
   end
   response
